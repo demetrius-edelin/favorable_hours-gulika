@@ -24,14 +24,14 @@ fn main() {
                 .unwrap(),
         );
         // get the favorable interval for current day
-        let interval_favorabil = get_interval(current_date, interval_number);
+        let favorable_interval = get_interval(current_date, interval_number);
         println!(
             "{:8} {}.{:5} interval favorabil: {} - {}",
             translate_weekdays(current_date.weekday()),
             current_date.format("%d"),
             current_date.format("%m,"),
-            interval_favorabil.0.format("%H:%M"),
-            interval_favorabil.1.format("%H:%M")
+            favorable_interval.0.format("%H:%M"),
+            favorable_interval.1.format("%H:%M")
         );
 
         current_date = current_date.add(Duration::days(1));
