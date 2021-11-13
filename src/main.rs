@@ -11,6 +11,7 @@ const LONGITUDE: f64 = 26.10626;
 fn main() {
     // get current date
     let mut current_date: DateTime<Local> = Local::now();
+    println!("\n");
 
     // loop over the next 31 days
     let mut counter: i32 = 0;
@@ -38,6 +39,7 @@ fn main() {
         counter = counter + 1;
     }
 
+    println!("\nApasă orice tastă pentru a ieși.");
     let mut input_string = String::new();
     io::stdin()
         .read_line(&mut input_string)
