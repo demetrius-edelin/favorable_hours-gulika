@@ -4,6 +4,10 @@ use std::io;
 use std::ops::Add;
 use sunrise::sunrise_sunset;
 
+// set the place as Bucharest
+const LATITUDE: f64 = 44.43225;
+const LONGITUDE: f64 = 26.10626;
+
 fn main() {
     // get current date
     let mut current_date: DateTime<Local> = Local::now();
@@ -43,19 +47,19 @@ fn main() {
 
 // find the interval in a day given the number
 fn get_interval(day: DateTime<Local>, number: i32) -> (NaiveTime, NaiveTime) {
-    let (ora_rasarit_timestamp, ora_apus_timestamp) =
-        sunrise_sunset(44.43225, 26.10626, day.year(), day.month(), day.day());
+    let (sunrise_timestamp, sunset_timestamp) =
+        sunrise_sunset(LATITUDE, LONGITUDE, day.year(), day.month(), day.day());
 
     // Create a normal DateTime from the NaiveDateTime
-    let rasarit: DateTime<Local> = Local.timestamp(ora_rasarit_timestamp, 0);
-    let apus: DateTime<Local> = Local.timestamp(ora_apus_timestamp, 0);
+    let sunrise: DateTime<Local> = Local.timestamp(sunrise_timestamp, 0);
+    let sunset: DateTime<Local> = Local.timestamp(sunset_timestamp, 0);
 
-    let interval = (apus.time() - rasarit.time()) / 8;
+    let interval = (sunset.time() - sunrise.time()) / 8;
 
-    let inceput = rasarit.time() + interval * (number - 1);
-    let sfarsit = inceput + interval;
+    let interval_start = sunrise.time() + interval * (number - 1);
+    let interval_end = interval_start + interval;
 
-    (inceput, sfarsit)
+    (interval_start, interval_end)
 }
 
 // get the favorable interval for day of week
